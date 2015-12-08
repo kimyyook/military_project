@@ -1,0 +1,91 @@
+package end_date;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class file_saveTEXT {
+	private static String filename;
+	private static String[] savedata = new String[10];
+	private static String[] loaddata = new String[10];
+	static int i=0;
+	public file_saveTEXT(String[] savedata, String filename){
+		file_saveTEXT.setFilename(filename);
+		file_saveTEXT.setSavedata(savedata);
+	}
+	public file_saveTEXT(String filename){
+		file_saveTEXT.setFilename(filename);
+	}
+	//파일이 존재하는지 확인
+	public static int is_File(){
+		try { 
+			FileReader fileread = new FileReader(getFilename()+".txt");
+			fileread.close();
+			return 1;
+            } 
+		catch (IOException e) { 
+            e.printStackTrace(); 
+            return 0;
+         } 
+	}
+	//텍스트 불러오기(한줄 단위)
+	public static void lineRead() {
+		try {
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(getFilename()+".txt"));
+			String line;
+			line = bufferedReader.readLine();
+			line = bufferedReader.readLine();
+			while ((line = bufferedReader.readLine()) != null) {
+				loaddata[i]=line.split(" : ")[1];;
+				i++;
+			}
+			i=0;
+			bufferedReader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	//텍스트 저장
+	public static void fileWrite() {
+		int i=0;
+		String temp=null;
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(getFilename()+".txt"));
+			writer.write("<전역일계산기 데이터!>");
+			writer.newLine();
+			writer.newLine();
+			for(i=0;i<getSavedata().length;i++){
+				writer.write(getSavedata()[i]);
+				writer.newLine();
+			}
+			writer.close();
+		} catch (Exception e) {
+	  }
+	}
+	public static String[] getLoadData() {
+		return loaddata;
+	}
+	public static String getFilename() {
+		return filename;
+	}
+	public static void setFilename(String filename) {
+		file_saveTEXT.filename = filename;
+	}
+	public static String[] getSavedata() {
+		return savedata;
+	}
+	public static void setSavedata(String[] savedata) {
+		file_saveTEXT.savedata = savedata;
+	}
+}
+
+
+
+
+
+
+
+
+
